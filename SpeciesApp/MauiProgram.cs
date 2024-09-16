@@ -1,4 +1,8 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Android.SE.Omapi;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Maui;
+using Microsoft.Maui.Hosting;
+using SpeciesApp.Models;
 
 namespace SpeciesApp
 {
@@ -15,11 +19,12 @@ namespace SpeciesApp
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-#if DEBUG
-    		builder.Logging.AddDebug();
-#endif
+            builder.Services.AddSingleton<User>();
 
-            return builder.Build();
+            var mauiApp = builder.Build();
+            Startup.Initialize(mauiApp.Services);
+
+            return mauiApp;
         }
     }
 }
